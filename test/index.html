@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+  <title>Title</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <link rel="stylesheet" href="/node_modules/photoswipe/dist/photoswipe.css">
+  <link rel="stylesheet" href="/node_modules/photoswipe/dist/default-skin/default-skin.css">
+  <script type="text/javascript" src="/node_modules/photoswipe/dist/photoswipe.min.js"></script>
+  <script type="text/javascript" src="/node_modules/photoswipe/dist/photoswipe-ui-default.min.js"></script>
+
+  <style>
+    .list {
+    }
+
+    .item {
+      width: 300px;
+      border: 1px dashed #e5e5e5;
+    }
+
+    .item img {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="pswp photo-full-screen" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- 背景 -->
+  <div class="pswp__bg"></div>
+  <div class="pswp__scroll-wrap">
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <div class="pswp__counter"></div>
+        <div class="pswp__button pswp__button--close"></div>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip"></div>
+      </div>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul class="list" id="list" data-pswp-uid="1">
+  <li class="item">
+    <img data-index="0" src="https://placekitten.com/600/400" alt="" id="img1">
+  </li>
+  <li class="item">
+    <img data-index="1" src="https://placekitten.com/1200/900" alt="" id="img2">
+  </li>
+</ul>
+<script type="text/javascript">
+  var pswpElement = document.querySelectorAll('.pswp')[0];
+
+  // build items array
+
+  // define options (if needed)
+  var options = {
+	// optionName: 'option value'
+	// for example:
+	index: 0 // start at first slide
+  };
+
+  function previewImage(index, containEl) {
+	const items = [
+	  {
+		src: 'https://placekitten.com/600/400',
+		el: document.getElementById('img1'),
+		w: 600,
+		h: 400,
+	  },
+	  {
+		src: 'https://placekitten.com/1200/900',
+		el: document.getElementById('img2'),
+		w: 1200,
+		h: 900
+	  }
+	];
+	const options = {
+	  index,
+	  galleryUID: containEl.getAttribute('data-pswp-uid'),
+	  getThumbBoundsFn(index) {
+		const img = $(containEl).find('img')[index];
+		const rect = img.getBoundingClientRect();
+		return {x: rect.left, y: rect.top, w: rect.width};
+	  }
+	};
+	const gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+	gallery.init();
+  }
+
+  // Initializes and opens PhotoSwipe
+  /*  var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+    gallery.init();*/
+
+  $('#list img').on('click', function () {
+	const index = +this.dataset.index;
+	previewImage(index, $('#list')[0]);
+  });
+
+</script>
+</body>
+</html>
