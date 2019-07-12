@@ -27,7 +27,7 @@ options:
 属性 | 类型 | 默认值|描述|必须
 --:|--:|--:|--:|--:
 imgList| `url[]` |undefined|图片链接数组|是
-current|`string|number|HTMLImageElement`|0|打开哪个|是
+current|`string丨number丨HTMLImageElement`|0|打开哪个|是
 elList|`HTMLImageElement[]`|document.images|与imgList对应的图片元素数组|否
 getTemplate|`Function`|undefined|自定义模板|否
 options|`Object`|{}|PhotoSwipe配置对象|否
