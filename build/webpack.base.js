@@ -28,13 +28,6 @@ const baseConfig = {
 		},
 		exclude: /(node_modules)/,
 	  },
-	  {
-		test: /(\.css)$/,
-		use: [
-		  {loader: 'style-loader'},
-		  {loader: 'css-loader'},
-		],
-	  },
 	  {test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, loader: 'url-loader'}
 	],
   },

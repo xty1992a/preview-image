@@ -13,6 +13,17 @@ module.exports = merge(base, {
   entry: {
 	app: root('src/demo.js'),
   },
+  module: {
+	rules: [
+	  {
+		test: /(\.css)$/,
+		use: [
+		  {loader: 'style-loader'},
+		  {loader: 'css-loader'},
+		],
+	  },
+	]
+  },
   devServer: {
 	contentBase: path.resolve(__dirname, '..'),
 	compress: true,

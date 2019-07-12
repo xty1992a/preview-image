@@ -4,10 +4,16 @@
 const path = require('path');
 const base = require('./webpack.base');
 const merge = require('webpack-merge');
+const root = p => path.join(__dirname, '..', p);
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const Uglify = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (args) => {
-  const plugins = [];
+  const plugins = [
+	new MiniCssExtractPlugin({
+	  filename: '[name].css',
+	}),
+  ];
 
   if (args === 'report') {
 	plugins.push(
@@ -17,7 +23,9 @@ module.exports = (args) => {
 
   return merge(base, {
 	mode: 'production',
-	entry: {},
+	entry: {
+	  'preview-image': root('src/main.ts')
+	},
 	output: {
 	  path: path.resolve(__dirname, '../lib'),
 	  filename: '[name].js',
@@ -27,7 +35,17 @@ module.exports = (args) => {
 	  libraryExport: 'default', // 需要暴露的模块
 	  umdNamedDefine: true,
 	},
-	module: {},
+	module: {
+	  rules: [
+		{
+		  test: /(\.css)$/,
+		  use: [
+			MiniCssExtractPlugin.loader,
+			{loader: 'css-loader'},
+		  ],
+		},
+	  ],
+	},
 	performance: false,
 	optimization: {
 	  minimize: true,
